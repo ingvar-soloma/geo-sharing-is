@@ -1,0 +1,8 @@
+{
+  "name": "GeoSharing.is",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite",
+  "id": "d476edf8"
+}
