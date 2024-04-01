@@ -1,4 +1,4 @@
-import { createI18n, VueMessageType } from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import { App } from 'vue';
 
 // Import your language files
@@ -6,7 +6,7 @@ import en from './locales/en.json';
 import ua from './locales/ua.json';
 
 // Define type for messages object
-type Messages = Record<string, VueMessageType>;
+type Messages = Record<string, string>;
 
 const messages: Messages = {
   en,
