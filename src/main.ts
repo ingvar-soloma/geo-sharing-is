@@ -23,13 +23,14 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import {createPinia} from "pinia";
-import { setupI18n } from './i18n.ts';
+const i18n = require("i18n")
 
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(createPinia());
-setupI18n(app);
+
+i18n.setupI18n(app);
 
 router.isReady().then(() => {
   app.mount('#app');
