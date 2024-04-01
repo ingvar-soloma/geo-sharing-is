@@ -6,7 +6,7 @@ import en from './locales/en.json';
 import ua from './locales/ua.json';
 
 // Define type for messages object
-type Messages = Record<string, string>;
+type Messages = Record<string, object>;
 
 const messages: Messages = {
   en,
@@ -15,7 +15,6 @@ const messages: Messages = {
 
 // Create a new instance of vue-i18n
 const i18n = createI18n({
-  legacy: false,
   locale: 'ua',
   fallbackLocale: 'en',
   messages
