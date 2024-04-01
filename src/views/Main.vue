@@ -70,4 +70,14 @@ import {locate, refresh, send} from 'ionicons/icons';
 const city = ref('12');
 const address = ref('');
 const lastUpdateTime = ref('');
+
+const displayLocation = {
+
+}
+const updateLocation = {
+
+}
+const sendLocation = {
+
+}
 </script>
