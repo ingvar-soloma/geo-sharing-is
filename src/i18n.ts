@@ -6,9 +6,8 @@ import en from './locales/en.json';
 import ua from './locales/ua.json';
 
 // Define type for messages object
-type Messages = Record<string, object>;
 
-const messages: Messages = {
+const messages = {
   en,
   ua
 };
