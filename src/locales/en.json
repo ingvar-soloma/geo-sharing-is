@@ -1,0 +1,17 @@
+{
+  "addressLabel": "Address: ",
+  "cityLabel": "City: ",
+  "displayLocationLabel": "Display Location",
+  "english": "English",
+  "history": "History",
+  "language": "Language",
+  "lastUpdateTimeLabel": "Last Update Time: ",
+  "locationLabel": "Location",
+  "main": "Main",
+  "sendLocationLabel": "Send Location",
+  "settings": "Settings",
+  "telegramConnections": "Telegram Integraions",
+  "testConnection": "Test Connection",
+  "ukrainian": "Ukrainian",
+  "updateLocationLabel": "Update Location"
+}
