@@ -71,13 +71,13 @@ const city = ref('12');
 const address = ref('');
 const lastUpdateTime = ref('');
 
-const displayLocation = {
+const displayLocation = () => {
 
 }
-const updateLocation = {
+const updateLocation = () => {
 
 }
-const sendLocation = {
+const sendLocation = () => {
 
 }
 </script>
