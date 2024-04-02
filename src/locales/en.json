@@ -2,7 +2,7 @@
   "addressLabel": "Address: ",
   "cityLabel": "City: ",
   "displayLocationLabel": "Display Location",
-  "english": "English",
+  "locale-en": "English",
   "history": "History",
   "language": "Language",
   "lastUpdateTimeLabel": "Last Update Time: ",
@@ -12,6 +12,6 @@
   "settings": "Settings",
   "telegramConnections": "Telegram Integrations",
   "testConnection": "Test Connection",
-  "ukrainian": "Ukrainian",
+  "locale-ua": "Ukrainian",
   "updateLocationLabel": "Update Location"
 }

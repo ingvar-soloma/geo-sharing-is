@@ -13,16 +13,8 @@ const messages = {
 };
 
 // Create a new instance of vue-i18n
-const i18n = createI18n({
+export default createI18n({
   locale: 'ua',
   fallbackLocale: 'en',
   messages
 });
-
-// Export the i18n instance
-export default i18n;
-
-// Create a function to install the i18n instance globally
-export function setupI18n(app: App) {
-  app.use(i18n);
-}

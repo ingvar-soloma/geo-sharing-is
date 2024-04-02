@@ -2,37 +2,37 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>{{ $tc('main') }}</ion-title>
+                <ion-title>{{ $t('main') }}</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
             <ion-header collapse="condense">
                 <ion-toolbar>
-                    <ion-title size="large">{{ $tc('main') }}</ion-title>
+                    <ion-title size="large">{{ $t('main') }}</ion-title>
                 </ion-toolbar>
             </ion-header>
 
             <ion-card>
                 <ion-card-header>
-                    <ion-card-title>{{ $tc('locationLabel') }}</ion-card-title>
+                    <ion-card-title>{{ $t('locationLabel') }}</ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <ion-label>{{ $tc('cityLabel') }}</ion-label>
+                                <ion-label>{{ $t('cityLabel') }}</ion-label>
                                 <ion-text>{{ city }}</ion-text>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col>
-                                <ion-label>{{ $tc('addressLabel') }}</ion-label>
+                                <ion-label>{{ $t('addressLabel') }}</ion-label>
                                 <ion-text>{{ address }}</ion-text>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col>
-                                <ion-label>{{ $tc('lastUpdateTimeLabel') }}</ion-label>
+                                <ion-label>{{ $t('lastUpdateTimeLabel') }}</ion-label>
                                 <ion-text>{{ lastUpdateTime }}</ion-text>
                             </ion-col>
                         </ion-row>

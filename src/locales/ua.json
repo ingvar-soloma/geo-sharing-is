@@ -2,7 +2,7 @@
   "addressLabel": "Адреса: ",
   "cityLabel": "Місто: ",
   "displayLocationLabel": "Показати геолокацію",
-  "english": "Англійська",
+  "locale-en": "Англійська",
   "history": "Історія",
   "language": "Мова",
   "lastUpdateTimeLabel": "Час останнього оновлення: ",
@@ -12,6 +12,6 @@
   "settings": "Налаштування",
   "telegramConnections": "Телеграм Інтеграції",
   "testConnection": "Перевірити з'єднання",
-  "ukrainian": "Українська",
+  "locale-ua": "Українська",
   "updateLocationLabel": "Оновити геолокацію"
 }
