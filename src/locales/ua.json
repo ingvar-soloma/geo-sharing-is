@@ -10,8 +10,14 @@
   "locationLabel": "Геолокація",
   "main": "Головна",
   "noAddressAvailable": "Адреса не доступна",
+  "noChatsFound": "Не знайдено чатів",
   "sendLocationLabel": "Відправити геолокацію",
   "settings": "Налаштування",
+  "telegramBotApi": {
+    "checkChatId": "Перевірити chatId",
+    "checkConnectionAndGetChatList": "Перевірити токен та отримати список чатів"
+  },
+  "telegramChatList": "Список телеграм чатів",
   "telegramConnections": "Телеграм Інтеграції",
   "testConnection": "Перевірити з'єднання",
   "updateLocationLabel": "Оновити геолокацію"

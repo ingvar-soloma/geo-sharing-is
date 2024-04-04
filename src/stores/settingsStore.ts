@@ -25,7 +25,6 @@ export const useSettingsStore = defineStore({
       }
     },
     async saveSettings(key: string, value: any) {
-      console.log('saving')
       try {
         // await Storage.set({key: `settings.${key}`, value: value,});
         localStorage.setItem(`settings.${key}`, value.toString());
@@ -41,9 +40,15 @@ export const useSettingsStore = defineStore({
       this.botToken = botToken;
       this.saveSettings('botToken', botToken);
     },
-    setChatId(chatId: string) {
+    setChatId(chatId: number) {
       this.chatId = chatId;
       this.saveSettings('chatId', chatId.toString());
     },
+    isBotTokenStored(botToken: string): boolean {
+      return this.botToken == botToken;
+    },
+    isChatIdStored(chatId: number): boolean {
+      return this.chatId == chatId
+    }
   },
 });

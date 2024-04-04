@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
+import {GPSCoordinates} from "@/types";
 
-interface GPSCoordinates {
-  latitude: number,
-  longitude: number
-}
 
 export const useLocationStore = defineStore({
   id: 'location',

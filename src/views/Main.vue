@@ -99,10 +99,11 @@ import {locate, refresh, send, shareSocial} from 'ionicons/icons';
 import {useLocationStore} from '@/stores/locationStore';
 import {useSettingsStore} from "@/stores/settingsStore";
 import {TelegramBotService} from '@/services/TelegramBotService';
-import {AddressComponents, getAddressFromCoordinates, getCurrentPosition} from '@/services/locationService';
+import {getAddressFromCoordinates, getCurrentPosition} from '@/services/locationService';
 import {Share} from '@capacitor/share';
 import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
+import {AddressComponents} from "@/types";
 
 
 const locationStore = useLocationStore();

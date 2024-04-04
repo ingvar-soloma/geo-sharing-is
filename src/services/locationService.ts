@@ -3,6 +3,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { environment } from '@/environment';
 import { toastController } from '@ionic/vue';
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
+import {AddressComponents} from "@/types";
 
 // 🛰️ Function to get the current position
 export async function getCurrentPosition(): Promise<Position['coords']> {
@@ -28,12 +29,6 @@ export async function getCurrentPosition(): Promise<Position['coords']> {
     console.error('Error getting current position:', error);
     throw error;
   }
-}
-
-// 🏙️ Interface for address components
-export interface AddressComponents {
-  city: string;
-  address: string;
 }
 
 // 📍 Function to get address from coordinates
