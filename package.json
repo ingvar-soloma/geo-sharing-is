@@ -20,6 +20,7 @@
     "@capacitor/keyboard": "5.0.8",
     "@capacitor/share": "^5.0.7",
     "@capacitor/status-bar": "5.0.7",
+    "@ionic/storage": "^4.0.0",
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",
     "axios": "^1.6.8",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@capacitor/cli": "5.7.4",
     "@types/node": "^20.12.2",
+    "@types/node-telegram-bot-api": "^0.64.6",
     "@vitejs/plugin-legacy": "^5.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",

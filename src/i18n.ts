@@ -14,6 +14,7 @@ const messages = {
 
 // Create a new instance of vue-i18n
 export default createI18n({
+  legacy: false,
   locale: 'ua',
   fallbackLocale: 'en',
   messages

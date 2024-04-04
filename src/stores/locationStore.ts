@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia';
 
+interface GPSCoordinates {
+  latitude: number,
+  longitude: number
+}
+
 export const useLocationStore = defineStore({
   id: 'location',
   state: () => ({
@@ -20,7 +25,11 @@ export const useLocationStore = defineStore({
       this.latitude = latitude;
       this.longitude = longitude;
       this.lastUpdateCoordinateTime = new Date().toLocaleString();
-
     }
   },
+  getters: {
+    getCoordinates(): GPSCoordinates {
+      return {latitude: this.latitude, longitude: this.longitude};
+    }
+  }
 });

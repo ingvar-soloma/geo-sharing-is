@@ -14,7 +14,9 @@ export async function getCurrentPosition(): Promise<Position['coords']> {
     const toast = await toastController.create({
       message: 'Error getting current position',
       duration: 3000,
-      color: 'danger'
+      color: 'danger',
+      buttons: [{text: 'Close', role: 'cancel',}]
+
     });
     await toast.present();
 
@@ -58,7 +60,8 @@ export async function getAddressFromCoordinates(latitude: number, longitude: num
     const toast = await toastController.create({
       message: 'Error fetching address',
       duration: 2000,
-      color: 'danger'
+      color: 'danger',
+      buttons: [{text: 'Close', role: 'cancel',}]
     });
     await toast.present();
 

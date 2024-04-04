@@ -31,6 +31,10 @@ const app = createApp(App)
   .use(i18n)
   .use(createPinia());
 
+// import { Storage } from '@ionic/storage';
+
+// const store = new Storage();
+// await store.create();
 
 router.isReady().then(() => {
   app.mount('#app');

@@ -39,7 +39,8 @@
                                     <!-- If the address is available -->
                                     <template v-if="locationStore.address">
                                         <!-- Create a link to open the address in maps -->
-                                        <a :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(locationStore.address)" target="_blank">
+                                        <a :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(locationStore.address)"
+                                           target="_blank">
                                             {{ locationStore.address }}
                                         </a>
                                     </template>
@@ -93,16 +94,19 @@
 </template>
 
 <script setup lang="ts">
-import { IonButton, IonCol, IonGrid, IonIcon, IonPage, IonRow } from '@ionic/vue';
+import {IonButton, IonCol, IonGrid, IonIcon, IonPage, IonRow, toastController} from '@ionic/vue';
 import {locate, refresh, send, shareSocial} from 'ionicons/icons';
-import { useLocationStore } from '@/stores/locationStore';
-import { getCurrentPosition, getAddressFromCoordinates, AddressComponents } from '@/services/locationService';
-import { toastController } from '@ionic/vue';
-import { Share } from '@capacitor/share';
+import {useLocationStore} from '@/stores/locationStore';
+import {useSettingsStore} from "@/stores/settingsStore";
+import {TelegramBotService} from '@/services/TelegramBotService';
+import {AddressComponents, getAddressFromCoordinates, getCurrentPosition} from '@/services/locationService';
+import {Share} from '@capacitor/share';
 import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
 
+
 const locationStore = useLocationStore();
+const settingsStore = useSettingsStore();
 
 onMounted(async () => {
     await updateLocation();
@@ -142,7 +146,10 @@ const updateLocation = async () => {
         // 🛰️ Get current position
         const coordinates: Position['coords'] = await getCurrentPosition();
         // 📍 Get address from coordinates
-        const { city, address }: AddressComponents = await getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
+        const {
+            city,
+            address
+        }: AddressComponents = await getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
         // 🌍 Update location in store
         locationStore.updateLocation(city, address);
         // 🛰️ Update coordinates in store
@@ -154,7 +161,34 @@ const updateLocation = async () => {
 };
 
 const sendLocation = async () => {
-    // ✉️ Send location logic
+    try {
+        const telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
+
+        const coordinates = locationStore.getCoordinates;
+
+        // 📡 Send location via Telegram
+        await telegramBot.sendLocation(coordinates.latitude, coordinates.longitude);
+
+        // ℹ️ Inform the user that the location has been sent
+        const toast = await toastController.create({
+            message: 'Location sent via Telegram',
+            duration: 3000,
+            color: 'success',
+            buttons: [{text: 'Close', role: 'cancel',}]
+        });
+        await toast.present();
+    } catch (error) {
+        const toast = await toastController.create({
+            message: (error as Error).message,
+            duration: 3000,
+            color: 'danger',
+            buttons: [{text: 'Close', role: 'cancel',}]
+        });
+        await toast.present();
+
+        console.error(error);
+    }
+
 };
 
 const shareLocation = async () => {
@@ -169,10 +203,16 @@ const shareLocation = async () => {
         await Share.share({
             title: 'My Location',
             text: message,
-            url: '',
             dialogTitle: 'Share my location'
         });
     } catch (error) {
+        const toast = await toastController.create({
+            message: (error as Error).message,
+            duration: 3000,
+            color: 'danger',
+            buttons: [{text: 'Close', role: 'cancel',}]
+        });
+        await toast.present();
         console.error('Error sharing location:', error);
     }
 };
