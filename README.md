@@ -57,8 +57,3 @@ ionic capacitor build android --prod
 ```bash
 ionic capacitor build ios --prod
 ```
-
-
-### To build the app for production:
-#### Android
-#### iOS
