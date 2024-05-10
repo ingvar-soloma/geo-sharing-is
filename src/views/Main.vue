@@ -94,7 +94,25 @@
 </template>
 
 <script setup lang="ts">
-import {IonButton, IonCol, IonGrid, IonIcon, IonPage, IonRow, toastController} from '@ionic/vue';
+import {
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCol,
+    IonContent,
+    IonGrid,
+    IonHeader,
+    IonIcon,
+    IonLabel,
+    IonPage,
+    IonRow,
+    IonText,
+    IonTitle,
+    IonToolbar,
+    toastController
+} from '@ionic/vue';
 import {locate, refresh, send, shareSocial} from 'ionicons/icons';
 import {useLocationStore} from '@/stores/locationStore';
 import {useSettingsStore} from "@/stores/settingsStore";
@@ -163,11 +181,10 @@ const updateLocation = async () => {
 
 const sendLocation = async () => {
     try {
-        const telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
-
         const coordinates = locationStore.getCoordinates;
 
         // 📡 Send location via Telegram
+        const telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
         await telegramBot.sendLocation(coordinates.latitude, coordinates.longitude);
 
         // ℹ️ Inform the user that the location has been sent

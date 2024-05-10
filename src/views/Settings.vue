@@ -16,7 +16,8 @@
             <!-- Language selector -->
             <ion-item>
                 <ion-label>{{ $t('language') }}</ion-label>
-                <ion-select v-model="$i18n.locale" @ionChange="settingsStore.setLanguage($event.detail.value)">
+                <ion-select v-model="$i18n.locale" :aria-label="$t('language')"
+                            @ionChange="settingsStore.setLanguage($event.detail.value)">
                     <ion-select-option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`"
                                        :value="locale">{{ $t(`locale-${locale}`) }}
                     </ion-select-option>
@@ -35,7 +36,7 @@
                     <ion-item>
                         <ion-label position="stacked">BotToken</ion-label>
                         <ion-input v-model="botToken" :type="showToken ? 'text' : 'password'"
-                                   class="ion-no-padding"></ion-input>
+                                   aria-label="BotToken" class="ion-no-padding"/>
                         <ion-button fill="clear" slot="end" aria-label="Show/hide" @click="toggleTokenVisibility">
                             <ion-icon slot="icon-only" :icon="showToken ? eye : eyeOff" aria-hidden="true"></ion-icon>
                         </ion-button>
@@ -65,7 +66,7 @@
 
                     <ion-item>
                         <ion-label position="stacked">ChatId</ion-label>
-                        <ion-input v-model="chatId"></ion-input>
+                        <ion-input v-model="chatId" aria-label="BotToken"/>
                         <ion-button :disabled="settingsStore.isChatIdStored(chatId)" fill="clear" slot="end"
                                     aria-label="Reset" @click="resetChatId">
                             <ion-icon slot="end" :icon="reloadOutline"></ion-icon>
@@ -93,14 +94,16 @@ import {
     IonIcon,
     IonInput,
     IonItem,
+    IonLabel,
     IonList,
     IonPage,
     IonSelect,
     IonSelectOption,
     IonTitle,
     IonToolbar,
-    toastController
+    toastController,
 } from '@ionic/vue';
+
 import {eye, eyeOff, reloadOutline} from 'ionicons/icons';
 import {useSettingsStore} from '@/stores/settingsStore';
 import {onMounted, ref} from "vue";

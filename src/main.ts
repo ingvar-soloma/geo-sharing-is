@@ -1,9 +1,10 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router';
-
+// import {BackgroundTask} from '@capacitor/core';
+import {BackgroundRunner} from "@capacitor/background-runner";
 import {IonicVue} from '@ionic/vue';
-
+// import bgGeolocation from '@/services/backgroundGeolocationService'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -36,6 +37,24 @@ const app = createApp(App)
 // const store = new Storage();
 // await store.create();
 
-router.isReady().then(() => {
+router.isReady().then(async () => {
   app.mount('#app');
+
+  try {
+    const permissions = await BackgroundRunner.requestPermissions({
+      apis: ['geolocation', 'notifications']
+    })
+    console.log('permissions have been got:', permissions)
+  } catch (error) {
+    console.error('permissions')
+    throw error
+  }
+
+  const result = await BackgroundRunner.dispatchEvent({
+    label: 'com.example.background.task',
+    event: 'myCustomEvent',
+    details: {},
+  })
+
+  console.log('BackgroundRunner.dispatchEvent result:', result)
 });
