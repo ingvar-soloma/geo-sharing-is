@@ -3,7 +3,7 @@
 addEventListener("syncTest", (resolve, reject, args) => {
   console.log("calling sync test");
   setTimeout(() => {
-    console.log("tick");
+    console.log("tick 3003");
     resolve();
   }, 3000);
 });

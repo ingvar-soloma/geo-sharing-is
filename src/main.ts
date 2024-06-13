@@ -1,7 +1,6 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router';
-// import {BackgroundTask} from '@capacitor/core';
 import {BackgroundRunner} from "@capacitor/background-runner";
 import {IonicVue} from '@ionic/vue';
 // import bgGeolocation from '@/services/backgroundGeolocationService'
@@ -41,20 +40,19 @@ router.isReady().then(async () => {
   app.mount('#app');
 
   try {
-    const permissions = await BackgroundRunner.requestPermissions({
+    await BackgroundRunner.requestPermissions({
       apis: ['geolocation', 'notifications']
     })
-    console.log('permissions have been got:', permissions)
   } catch (error) {
     console.error('permissions')
     throw error
   }
 
-  const result = await BackgroundRunner.dispatchEvent({
-    label: 'com.example.background.task',
-    event: 'myCustomEvent',
-    details: {},
-  })
-
-  console.log('BackgroundRunner.dispatchEvent result:', result)
+  // const result = await BackgroundRunner.dispatchEvent({
+  //   label: 'com.geoSharing.runner.task',
+  //   event: 'syncTest',
+  //   details: {},
+  // })
+  //
+  // console.log('BackgroundRunner.dispatchEvent result:', result)
 });
