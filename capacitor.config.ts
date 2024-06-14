@@ -9,7 +9,7 @@ const config: CapacitorConfig = {
   },
   plugins: {
     BackgroundRunner: {
-      label: "com.geoSharing.runner.task22",
+      label: "com.geoSharing.runner.taskB",
       src: "background.js",
       event: "syncTest",
       repeat: true,

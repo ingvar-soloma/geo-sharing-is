@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.geoSharing.runner;
 
 import com.getcapacitor.BridgeActivity;
 

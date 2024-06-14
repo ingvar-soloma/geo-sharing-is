@@ -1,9 +1,17 @@
 // basic functionality
 
 addEventListener("syncTest", (resolve, reject, args) => {
-  console.log("calling sync test");
+  console.log("calling sync B");
   setTimeout(() => {
-    console.log("tick 3003");
+    console.log("tick B");
+    resolve();
+  }, 3000);
+});
+
+addEventListener("syncTestF", (resolve, reject, args) => {
+  console.log("calling sync syncTestF");
+  setTimeout(() => {
+    console.log("tick syncTestF");
     resolve();
   }, 3000);
 });

@@ -48,11 +48,19 @@ router.isReady().then(async () => {
     throw error
   }
 
-  // const result = await BackgroundRunner.dispatchEvent({
-  //   label: 'com.geoSharing.runner.task',
-  //   event: 'syncTest',
-  //   details: {},
-  // })
-  //
-  // console.log('BackgroundRunner.dispatchEvent result:', result)
+  const result = await BackgroundRunner.dispatchEvent({
+    label: 'com.geoSharing.runner.task1',
+    event: 'testCapNotification',
+    details: {},
+  })
+
+  console.log('BackgroundRunner.dispatchEvent result:', result)
+
+  const result2 = await BackgroundRunner.dispatchEvent({
+    label: 'com.geoSharing.runner.task2',
+    event: 'remoteNotification',
+    details: {},
+  })
+
+  console.log('BackgroundRunner.dispatchEvent result2:', result2)
 });
