@@ -50,7 +50,7 @@ router.isReady().then(async () => {
 
   const result = await BackgroundRunner.dispatchEvent({
     label: 'com.geoSharing.runner.task1',
-    event: 'testCapNotification',
+    event: 'syncTestF',
     details: {},
   })
 
@@ -58,7 +58,7 @@ router.isReady().then(async () => {
 
   const result2 = await BackgroundRunner.dispatchEvent({
     label: 'com.geoSharing.runner.task2',
-    event: 'remoteNotification',
+    event: 'asyncTest',
     details: {},
   })
 

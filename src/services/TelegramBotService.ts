@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {ChatItem, TelegramChat, TelegramFile} from "@/types";
-import path from "path";
-import * as fs from "fs";
+import {ChatItem, TelegramChat, TelegramFile} from '@/types';
 
 export class TelegramBotService {
   private static readonly TELEGRAM_API_BASE_URL = 'https://api.telegram.org/bot%s/%s';
@@ -17,17 +15,18 @@ export class TelegramBotService {
     getUpdates: 'getUpdates',
     getChat: 'getChat',
     getFile: 'getFile',
+    sendMessage: 'sendMessage',
+    sendLocation: 'sendLocation',
   };
 
   async getUpdates(offset: number = 0) {
     try {
-      const urlString = TelegramBotService.formatUrl(this.botToken, this.METHODS.getUpdates);
+      const urlString = this.formatUrl(this.METHODS.getUpdates);
       return await axios.get(urlString, {
         params: {
-          offset: offset
-        }
+          offset: offset,
+        },
       });
-      // console.log('Updates received:', response.data);
     } catch (error) {
       console.error('Error getting updates:', (error as Error).message);
       throw 'Error getting updates';
@@ -36,11 +35,11 @@ export class TelegramBotService {
 
   async getChat(chatId: number | string): Promise<TelegramChat> {
     try {
-      const urlString = TelegramBotService.formatUrl(this.botToken, this.METHODS.getChat);
+      const urlString = this.formatUrl(this.METHODS.getChat);
       const response = await axios.get(urlString, {
         params: {
-          chat_id: chatId
-        }
+          chat_id: chatId,
+        },
       });
       const chat = response.data.result;
       if (!chat) {
@@ -48,9 +47,7 @@ export class TelegramBotService {
       }
       const id = chat.id;
       const name = chat.title || chat.username || '';
-      // const image = chat.photo?.small_file_id ? this.getImageUrl(chat.photo.small_file_id) : null;
-      const image = chat.photo?.small_file_id;
-      return { id, name, image };
+      return {id, name};
     } catch (error) {
       console.error('Error getting chat information:', (error as Error).message);
       throw 'Error getting chat information';
@@ -80,70 +77,52 @@ export class TelegramBotService {
   }
 
   async getFile(fileId: string): Promise<TelegramFile> {
-    let file
     try {
-      const urlString = TelegramBotService.formatUrl(this.botToken, this.METHODS.getFile);
+      const urlString = this.formatUrl(this.METHODS.getFile);
       const response = await axios.get(urlString, {
         params: {
-          file_id: fileId
-        }
+          file_id: fileId,
+        },
       });
-      file = response.data.result;
-
+      const file = response.data.result;
+      if (!file) {
+        throw new Error('File not found');
+      }
+      const fileId2 = file.file_id;
+      const filePath = file.file_path;
+      return {fileId: fileId2, filePath};
     } catch (error) {
       console.error('Error getting file information:', (error as Error).message);
       throw 'Error getting file information';
     }
-
-    if (!file) {
-      throw new Error('File not found');
-    }
-    const fileId2 = file.file_id;
-    const filePath = file.file_path;
-    return { fileId: fileId2, filePath };
   }
 
-
-  async downloadFile(filePath: string, destinationPath: string): Promise<void> {
+  async downloadFile(filePath: string, fileName: string): Promise<void> {
     try {
-      const fileUrl = TelegramBotService.formatFileUrl(this.botToken, filePath)
+      const fileUrl = this.formatFileUrl(filePath);
       const response = await axios.get(fileUrl, {
-        responseType: 'stream'
+        responseType: 'blob',
       });
 
-      const writer = fs.createWriteStream(path.resolve(destinationPath));
-      response.data.pipe(writer);
-
-      return new Promise<void>((resolve, reject) => {
-        writer.on('finish', resolve);
-        writer.on('error', reject);
-      });
+      const blob = new Blob([response.data]);
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
     } catch (error) {
       console.error('Error downloading file:', (error as Error).message);
       throw 'Error downloading file';
     }
   }
 
-  private static formatUrl(botToken: string, method: string, chat_id: number|null = null): string {
-    let url: string = TelegramBotService.TELEGRAM_API_BASE_URL.replace('%s', botToken).replace('%s', method);
-
-    if (chat_id) url += `?chat_id=${chat_id.toString()}`
-
-    return url;
-  }
-
-  private static formatFileUrl(botToken: string, path: string): string {
-    return TelegramBotService.TELEGRAM_API_URL_FILE.replace('%s', botToken).replace('%s', path);
-  }
-
   async sendMessage(message: string): Promise<void> {
     try {
-      const urlString = TelegramBotService.formatUrl(this.botToken, 'sendMessage', this.chatId);
+      const urlString = this.formatUrl(this.METHODS.sendMessage);
       const response = await axios.get(urlString, {
         params: {
           text: message,
-          parse_mode: 'html'
-        }
+          parse_mode: 'html',
+        },
       });
       console.log('Message sent successfully:', response.data);
     } catch (error) {
@@ -155,7 +134,7 @@ export class TelegramBotService {
   // Todo: edit location instead resend it
   async sendLocation(latitude: number, longitude: number): Promise<void> {
     try {
-      const urlString = TelegramBotService.formatUrl(this.botToken, 'sendLocation', this.chatId);
+      const urlString = this.formatUrl(this.METHODS.sendLocation);
       const response = await axios.get(urlString, {
         params: {
           latitude: latitude,
@@ -167,13 +146,26 @@ export class TelegramBotService {
           // heading: 90,
           // title: 'test',
           // address: 'testadr'
-        }
+        },
       });
       console.log('Location sent successfully:', response.data);
     } catch (error) {
-
       console.error('Error sending location:', (error as Error).message);
       throw 'Error sending location';
     }
+  }
+
+  private formatUrl(method: string): string {
+    let url: string = TelegramBotService.TELEGRAM_API_BASE_URL.replace('%s', this.botToken).replace('%s', method);
+
+    if (method === this.METHODS.sendLocation || method === this.METHODS.sendMessage) {
+      url += `?chat_id=${this.chatId.toString()}`;
+    }
+
+    return url;
+  }
+
+  private formatFileUrl(filePath: string): string {
+    return TelegramBotService.TELEGRAM_API_URL_FILE.replace('%s', this.botToken).replace('%s', filePath);
   }
 }
