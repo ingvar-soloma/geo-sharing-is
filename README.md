@@ -1,8 +1,8 @@
 # GeoSharing.is
 Welcome to GeoSharing.is! This is a [Ionic](https://ionicframework.com/) project built with [Vue](https://vuejs.org/) framework.
 
-
 ## Getting Started
+
 To get started with this project, follow the instructions below.
 
 Prerequisites
@@ -12,14 +12,37 @@ Before running the app, ensure you have the following installed:
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 - Ionic CLI (npm install -g @ionic/cli)
 
+### TODO
+
+1. extract toaster to a separate component
+   - catch errors and display them in a toaster
+2. add a loading spinner
+3. add a map to the home page
+4. add update on scroll down to the home page
+5. add update on scroll down to the history page
+6. add a map to the history page
+7. add export location to gpx file
+8. add define places location by coordinates
+9. update location in telegram instead resending the message
+10. ask notification permissions
+11. offer user to insert tg bot token
+12. tell to user to disable power settings
+
+- Pause app activity
+- no restrictions for background activity
+
+13. do not send location if it is the same address as the previous one
+
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/my-ionic-app.git
 ```
 
 2. Navigate to the project directory:
+
 ```bash
 cd my-ionic-app
 ```
