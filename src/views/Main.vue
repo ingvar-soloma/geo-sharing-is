@@ -117,7 +117,7 @@ import {locate, refresh, send, shareSocial} from 'ionicons/icons';
 import {useLocationStore} from '@/stores/locationStore';
 import {useSettingsStore} from "@/stores/settingsStore";
 import {TelegramBotService} from '@/services/TelegramBotService';
-import {getAddressFromCoordinates, getCurrentPosition} from '@/services/locationService';
+import {LocationService} from '@/services/LocationService';
 import {Share} from '@capacitor/share';
 import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
@@ -126,6 +126,7 @@ import {AddressComponents} from "@/types";
 
 const locationStore = useLocationStore();
 const settingsStore = useSettingsStore();
+const locationService = new LocationService();
 
 onMounted(async () => {
     await updateLocation();
@@ -134,7 +135,7 @@ onMounted(async () => {
 const displayLocation = async () => {
     try {
         // 🛰️ Get current position
-        const coordinates: Position['coords'] = await getCurrentPosition();
+        const coordinates: Position['coords'] = await locationService.getCurrentPosition();
         // 🌍 Update location in store
         locationStore.updateCoordinates(coordinates.latitude, coordinates.longitude);
 
@@ -163,12 +164,12 @@ const displayLocation = async () => {
 const updateLocation = async () => {
     try {
         // 🛰️ Get current position
-        const coordinates: Position['coords'] = await getCurrentPosition();
+        const coordinates: Position['coords'] = await locationService.getCurrentPosition();
         // 📍 Get address from coordinates
         const {
             city,
             address
-        }: AddressComponents = await getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
+        }: AddressComponents = await locationService.getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
         // 🌍 Update location in store
         locationStore.updateLocation(city, address);
         // 🛰️ Update coordinates in store
@@ -183,6 +184,7 @@ const sendLocation = async () => {
     try {
         const coordinates = locationStore.getCoordinates;
 
+        console.log(settingsStore)
         // 📡 Send location via Telegram
         const telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
         await telegramBot.sendLocation(coordinates.latitude, coordinates.longitude);

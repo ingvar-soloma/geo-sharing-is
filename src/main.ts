@@ -1,9 +1,18 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router';
-import {BackgroundRunner} from "@capacitor/background-runner";
 import {IonicVue} from '@ionic/vue';
-// import bgGeolocation from '@/services/backgroundGeolocationService'
+import {createPinia} from "pinia";
+import i18n from "./i18n"
+import {
+  isBatteryOptimizationEnabled,
+  openBatteryOptimizationSettings,
+  requestIgnoreBatteryOptimization
+} from './services/batteryOptimizationService';
+import {LocationUpdateService} from './services/LocationUpdateService';
+import {ForegroundServiceManager} from "@/services/ForegroundServiceManager";
+import {useSettingsStore} from "@/stores/settingsStore";
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -22,45 +31,35 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import {createPinia} from "pinia";
-import i18n from "./i18n"
 
+// 🚀 This is the main entry point of the application
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(i18n)
   .use(createPinia());
 
-// import { Storage } from '@ionic/storage';
-
-// const store = new Storage();
-// await store.create();
+const LocationUpdateIntervalMS = 1000 * 60;
 
 router.isReady().then(async () => {
   app.mount('#app');
 
-  try {
-    await BackgroundRunner.requestPermissions({
-      apis: ['geolocation', 'notifications']
-    })
-  } catch (error) {
-    console.error('permissions')
-    throw error
+  const settingsStore = useSettingsStore();
+  await settingsStore.loadSettings();
+
+  if (!await isBatteryOptimizationEnabled()) {
+    await openBatteryOptimizationSettings();
+    await requestIgnoreBatteryOptimization();
   }
 
-  const result = await BackgroundRunner.dispatchEvent({
-    label: 'com.geoSharing.runner.task1',
-    event: 'syncTestF',
-    details: {},
-  })
+  const foregroundServiceManager = new ForegroundServiceManager();
+  await foregroundServiceManager.startForegroundService();
 
-  console.log('BackgroundRunner.dispatchEvent result:', result)
+  const locationUpdateService = new LocationUpdateService();
 
-  const result2 = await BackgroundRunner.dispatchEvent({
-    label: 'com.geoSharing.runner.task2',
-    event: 'asyncTest',
-    details: {},
-  })
+  setInterval(() => {
+    console.log('interval')
+    locationUpdateService.updateGeolocation();
+  }, LocationUpdateIntervalMS)
 
-  console.log('BackgroundRunner.dispatchEvent result2:', result2)
 });

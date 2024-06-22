@@ -8,14 +8,6 @@ const config: CapacitorConfig = {
     androidScheme: 'https'
   },
   plugins: {
-    BackgroundRunner: {
-      label: "com.geoSharing.runner.taskB",
-      src: "background.js",
-      event: "syncTest",
-      repeat: true,
-      interval: 2,
-      autoStart: true,
-    },
   },
 };
 

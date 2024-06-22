@@ -29,5 +29,8 @@
   "telegramConnections": "Telegram Integrations",
   "testConnection": "Test Connection",
   "toGetATelegramBotToken": "To get a Telegram bot token:",
-  "updateLocationLabel": "Update Location"
+  "updateLocationLabel": "Update Location",
+  "locationHistory": "Location History",
+  "latitudeWithValue": "Latitude: {latitude}",
+  "longitudeWithValue": "Longitude: {longitude}"
 }
