@@ -1,5 +1,4 @@
-import { createI18n } from 'vue-i18n';
-import { App } from 'vue';
+import {createI18n} from 'vue-i18n';
 
 // Import your language files
 import en from './locales/en.json';

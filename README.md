@@ -32,6 +32,17 @@ Before running the app, ensure you have the following installed:
 - no restrictions for background activity
 
 13. do not send location if it is the same address as the previous one
+14. inactive gps optimisation
+15. inactivity gps prescription optimisation
+
+### Features
+
+### Bugs
+
+1. restarting foreground service after app opening
+2. foreground service status not updating in component
+
+- need to use pinia store
 
 ### Installation
 

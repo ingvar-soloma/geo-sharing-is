@@ -2,6 +2,10 @@
   "addressLabel": "Адреса: ",
   "cityLabel": "Місто: ",
   "displayLocationLabel": "Показати геолокацію",
+  "foregroundNotification": {
+    "body": "Це тіло повідомлення",
+    "title": ""
+  },
   "history": "Історія",
   "language": "Мова",
   "lastUpdateTimeLabel": "Час останнього оновлення: ",

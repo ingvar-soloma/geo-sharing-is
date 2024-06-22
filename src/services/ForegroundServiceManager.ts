@@ -2,19 +2,13 @@ import {Capacitor} from "@capacitor/core";
 import {ForegroundService, StartForegroundServiceOptions} from '@capawesome-team/capacitor-android-foreground-service';
 
 export class ForegroundServiceManager {
-  private options: StartForegroundServiceOptions;
+  private readonly options: StartForegroundServiceOptions;
 
   constructor() {
     this.options = {
       body: "This is the body of the notification",
-      buttons: [
-        {
-          id: 1,
-          title: "Stop sharing location"
-        },
-      ],
       id: 123,
-      smallIcon: "ic_stat_icon_config_sample",
+      smallIcon: "ic_launcher",
       title: "This is the title of the notification"
     };
   }
@@ -24,8 +18,32 @@ export class ForegroundServiceManager {
       return false;
     }
 
-    if (!await ForegroundService.checkPermissions()) {
-      await ForegroundService.requestPermissions();
+    if (!await this.isPermissionsGranted()) {
+      await this.requestPermissions();
     }
+
+    await ForegroundService.startForegroundService(this.options);
+    return true;
+  }
+
+  public async requestPermissions() {
+    return (await ForegroundService.requestPermissions()).display;
+  }
+
+  public async getPermissionStatus() {
+    return (await ForegroundService.checkPermissions()).display;
+  }
+
+  public async stopForegroundService() {
+    if (Capacitor.getPlatform() !== 'android') {
+      return false;
+    }
+
+    await ForegroundService.stopForegroundService();
+    return true;
+  }
+
+  private async isPermissionsGranted() {
+    return await this.getPermissionStatus() === 'granted';
   }
 }

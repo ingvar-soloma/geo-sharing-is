@@ -47,9 +47,9 @@ router.isReady().then(async () => {
   const settingsStore = useSettingsStore();
   await settingsStore.loadSettings();
 
-  if (!await isBatteryOptimizationEnabled()) {
-    await openBatteryOptimizationSettings();
+  if (await isBatteryOptimizationEnabled()) {
     await requestIgnoreBatteryOptimization();
+    await openBatteryOptimizationSettings();
   }
 
   const foregroundServiceManager = new ForegroundServiceManager();
@@ -58,7 +58,6 @@ router.isReady().then(async () => {
   const locationUpdateService = new LocationUpdateService();
 
   setInterval(() => {
-    console.log('interval')
     locationUpdateService.updateGeolocation();
   }, LocationUpdateIntervalMS)
 

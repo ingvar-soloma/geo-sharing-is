@@ -20,33 +20,47 @@ export class LocationUpdateService {
   public async updateGeolocation() {
     // Get current location
     const {latitude, longitude} = await this.locationService.getCurrentPosition();
+    let currentLocation = {latitude, longitude};
 
-    // Store location in inner db
-    await DatabaseService.storeLocation(latitude, longitude);
+    if (this.lastSentLocation !== null) {
+
+      const distance = this.locationService.distance(currentLocation, this.lastSentLocation);
+
+      console.log('distance', distance)
+      if (distance < 0.009) {
+        currentLocation = this.lastSentLocation;
+      }
+    }
+
+
+    // use the time interval
+    await DatabaseService.storeLocation(currentLocation);
 
     // Send location to Telegram only if it changes
-    if (this.isLocationChanged(latitude, longitude)) {
-      await this.telegramBot.sendLocation(latitude, longitude);
-      this.lastSentLocation = {latitude, longitude};
+    if (this.isLocationChanged(currentLocation)) {
+      await this.telegramBot.sendLocation(currentLocation.latitude, currentLocation.longitude);
+      this.lastSentLocation = currentLocation;
 
-      this.initTimeout(latitude, longitude);
+      this.initTimeout(currentLocation);
     }
   }
 
-  private async sendLocationIfNecessary(latitude: number, longitude: number) {
-    await this.telegramBot.sendLocation(latitude, longitude);
-    this.initTimeout(latitude, longitude);
+  private async sendLocationIfNecessary(currentLocation: Location) {
+    await this.telegramBot.sendLocation(currentLocation.latitude, currentLocation.longitude);
+    this.initTimeout(currentLocation);
   }
 
   // Clear the previous timeout and set a new one
-  private initTimeout(latitude: number, longitude: number) {
+  private initTimeout(currentLocation: Location) {
     if (this.timeoutId !== 0) {
       clearTimeout(this.timeoutId);
     }
-    this.timeoutId = window.setTimeout(() => this.sendLocationIfNecessary(latitude, longitude), sendingTimeOutMs);
+    this.timeoutId = window.setTimeout(() => this.sendLocationIfNecessary(currentLocation), sendingTimeOutMs);
   }
 
-  private isLocationChanged(latitude: number, longitude: number) {
-    return this.lastSentLocation === null || this.lastSentLocation.latitude !== latitude || this.lastSentLocation.longitude !== longitude;
+  private isLocationChanged(cord: Location) {
+    return this.lastSentLocation === null
+      || this.lastSentLocation.latitude !== cord.latitude
+      || this.lastSentLocation.longitude !== cord.longitude;
   }
 }

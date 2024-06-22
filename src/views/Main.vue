@@ -123,7 +123,6 @@ import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
 import {AddressComponents} from "@/types";
 
-
 const locationStore = useLocationStore();
 const settingsStore = useSettingsStore();
 const locationService = new LocationService();

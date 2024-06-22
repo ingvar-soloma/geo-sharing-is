@@ -78,6 +78,9 @@
                     </ion-button>
                 </ion-card-content>
             </ion-card>
+
+            <ForegroundController v-if="isAndroid"/>
+
         </ion-content>
     </ion-page>
 </template>
@@ -106,11 +109,13 @@ import {
 
 import {eye, eyeOff, reloadOutline} from 'ionicons/icons';
 import {useSettingsStore} from '@/stores/settingsStore';
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useI18n} from 'vue-i18n'
 import {TelegramBotService} from "@/services/TelegramBotService";
 import {ChatItem} from "@/types";
 import TelegramBotInstructionModal from "@/components/TelegramBotInstructionModal.vue";
+import ForegroundController from "@/components/ForegroundController.vue";
+import {Capacitor} from "@capacitor/core";
 
 const settingsStore = useSettingsStore();
 const {locale} = useI18n()
@@ -197,4 +202,8 @@ const resetChatId = () => {
 const resetBotToken = () => {
     botToken.value = settingsStore.botToken
 }
+
+const isAndroid = computed(() => {
+    return Capacitor.getPlatform() === 'android';
+});
 </script>

@@ -4,9 +4,9 @@ export type Locations = Location[];
 export class DatabaseService {
   private static locations: Locations = [];
 
-  public static async storeLocation(latitude: number, longitude: number): Promise<void> {
-    this.locations.push({latitude, longitude});
-    console.log('Location stored successfully:', {latitude, longitude});
+  public static async storeLocation(cord: Location): Promise<void> {
+    this.locations.push(cord);
+    console.log('Location stored successfully:', cord);
   }
 
   public static async getLocations(): Promise<Locations> {

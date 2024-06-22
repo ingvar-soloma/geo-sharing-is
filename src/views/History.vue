@@ -11,6 +11,7 @@
                     <ion-title size="large">{{ $t('locationHistory') }}</ion-title>
                 </ion-toolbar>
             </ion-header>
+            <ion-button @click="fetchLocations">{{ $t('update') }}</ion-button>
 
             <ion-list>
                 <ion-item v-for="(location, index) in locations" :key="index">
@@ -20,8 +21,6 @@
                     </ion-label>
                 </ion-item>
             </ion-list>
-            <!--             add update button-->
-
         </ion-content>
     </ion-page>
 </template>

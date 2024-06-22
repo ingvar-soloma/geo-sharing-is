@@ -2,12 +2,19 @@
   "addressLabel": "Address: ",
   "cityLabel": "City: ",
   "displayLocationLabel": "Display Location",
+  "foregroundNotification": {
+    "body": "This is the body of the notification",
+    "title": "This is the title of the notification"
+  },
   "history": "History",
   "language": "Language",
   "lastUpdateTimeLabel": "Last Update Time: ",
+  "latitudeWithValue": "Latitude: {latitude}",
   "locale-en": "English",
   "locale-ua": "Ukrainian",
+  "locationHistory": "Location History",
   "locationLabel": "Location",
+  "longitudeWithValue": "Longitude: {longitude}",
   "main": "Main",
   "noAddressAvailable": "No address available",
   "noChatsFound": "No chats found",
@@ -30,7 +37,13 @@
   "testConnection": "Test Connection",
   "toGetATelegramBotToken": "To get a Telegram bot token:",
   "updateLocationLabel": "Update Location",
-  "locationHistory": "Location History",
-  "latitudeWithValue": "Latitude: {latitude}",
-  "longitudeWithValue": "Longitude: {longitude}"
+  "foregroundNotification.title": "",
+  "statusWithValue": "Status: {status} ",
+  "start": "Start",
+  "stop": "Stop",
+  "restart": "Restart",
+  "requestPermissions": "Request Permissions",
+  "permissionsWithValue": "Permissions: {permission}",
+  "foregroundController": "Foreground Controller",
+  "update": "Update"
 }

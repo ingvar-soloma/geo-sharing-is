@@ -8,14 +8,14 @@
                     <ion-label>{{ $t('main') }}</ion-label>
                 </ion-tab-button>
 
-                <ion-tab-button tab="settings" href="/tabs/settings">
-                    <ion-icon aria-hidden="true" :icon="cog"/>
-                    <ion-label>{{ $t('settings') }}</ion-label>
-                </ion-tab-button>
-
                 <ion-tab-button tab="history" href="/tabs/history">
                     <ion-icon aria-hidden="true" :icon="square"/>
                     <ion-label>{{ $t('history') }}</ion-label>
+                </ion-tab-button>
+
+                <ion-tab-button href="/tabs/settings" tab="settings">
+                    <ion-icon :icon="cog" aria-hidden="true"/>
+                    <ion-label>{{ $t('settings') }}</ion-label>
                 </ion-tab-button>
             </ion-tab-bar>
         </ion-tabs>
