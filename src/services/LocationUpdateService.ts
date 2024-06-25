@@ -2,6 +2,7 @@ import {Location, useDatabaseStore} from "@/stores/dataBaseStore";
 import {TelegramBotService} from './TelegramBotService';
 import {useSettingsStore} from "@/stores/settingsStore";
 import {LocationService} from './LocationService';
+import {useForegroundServiceStore} from "@/stores/foregroundServiceStore";
 
 const sendingTimeOutMs = 15 * 60 * 1000;
 
@@ -11,15 +12,17 @@ export class LocationUpdateService {
   private telegramBot: TelegramBotService;
   private locationService: LocationService;
   private databaseStore: ReturnType<typeof useDatabaseStore>;
+  private foregroundServiceStore: ReturnType<typeof useForegroundServiceStore>;
 
   constructor() {
     const settingsStore = useSettingsStore();
     this.databaseStore = useDatabaseStore();
+    this.foregroundServiceStore = useForegroundServiceStore();
     this.telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
     this.locationService = new LocationService();
   }
 
-  public async updateGeolocation() {
+  public async updateGeolocation(singleRun: boolean = false) {
     // Get current location
     const {latitude, longitude} = await this.locationService.getCurrentPosition();
     let currentLocation: Location = {latitude, longitude, timestamp: new Date().getTime()};
@@ -30,19 +33,23 @@ export class LocationUpdateService {
 
       console.log('distance', distance)
       if (distance < 0.009) {
-        currentLocation = this.lastSentLocation;
+        currentLocation = {
+          ...this.lastSentLocation,
+          timestamp: currentLocation.timestamp
+        };
       }
     }
 
     // use the time interval
     await this.databaseStore.storeLocation(currentLocation);
+    this.foregroundServiceStore.updateLastUpdateTime(currentLocation.timestamp);
 
     // Send location to Telegram only if it changes
     if (this.isLocationChanged(currentLocation)) {
       await this.telegramBot.sendLocation(currentLocation.latitude, currentLocation.longitude);
       this.lastSentLocation = currentLocation;
 
-      this.initTimeout(currentLocation);
+      singleRun || this.initTimeout(currentLocation);
     }
   }
 

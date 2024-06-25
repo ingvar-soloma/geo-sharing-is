@@ -20,7 +20,8 @@
   "locationHistory": {
     "title": "Історія геолокацій",
     "latitudeWithValue": "Широта: {latitude}",
-    "longitudeWithValue": "Довгота: {longitude}"
+    "longitudeWithValue": "Довгота: {longitude}",
+    "lastUpdatedTimeWithValue": "Час останнього оновлення: {lastUpdateTime}"
   },
   "locationLabel": "Геолокація",
   "main": "Головна",

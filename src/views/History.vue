@@ -4,7 +4,6 @@
             <ion-toolbar>
                 <ion-title>{{ $t('locationHistory.title') }}</ion-title>
                 <ion-buttons slot="end">
-                    <!--                    <ion-button @click="fetchLocations">{{ $t('update') }}</ion-button>-->
                     <ion-button @click="addLocation">{{ $t('add') }}</ion-button>
                 </ion-buttons>
             </ion-toolbar>
@@ -24,19 +23,32 @@
 </template>
 
 <script setup lang="ts">
-import {IonButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/vue';
 import {onMounted, ref} from 'vue';
 import {Locations, useDatabaseStore} from "@/stores/dataBaseStore";
+import {LocationUpdateService} from "@/services/LocationUpdateService";
 
 const locations = ref<Locations>([]);
 const dataBaseStore = useDatabaseStore();
+const manager = new LocationUpdateService();
 
 const fetchLocations = async () => {
     locations.value = await dataBaseStore.getLocations();
 };
 
 const addLocation = async () => {
-    await dataBaseStore.addRandomLocation();
+    await manager.updateGeolocation();
 };
 
 onMounted(fetchLocations);

@@ -1,8 +1,10 @@
+import {useForegroundServiceStore} from '@/stores/foregroundServiceStore';
 import {Capacitor} from "@capacitor/core";
 import {ForegroundService, StartForegroundServiceOptions} from '@capawesome-team/capacitor-android-foreground-service';
 
 export class ForegroundServiceManager {
   private readonly options: StartForegroundServiceOptions;
+  private foregroundServiceStore: ReturnType<typeof useForegroundServiceStore> = useForegroundServiceStore();
 
   constructor() {
     this.options = {
@@ -23,11 +25,16 @@ export class ForegroundServiceManager {
     }
 
     await ForegroundService.startForegroundService(this.options);
+    console.log('Foreground service started');
+    this.foregroundServiceStore.setStatus('running');
     return true;
   }
 
   public async requestPermissions() {
-    return (await ForegroundService.requestPermissions()).display;
+    const permissionStatus = (await ForegroundService.requestPermissions()).display;
+    console.log('Permission status:', permissionStatus)
+    this.foregroundServiceStore.setPermissionStatus(permissionStatus);
+    return permissionStatus;
   }
 
   public async getPermissionStatus() {

@@ -39,7 +39,7 @@ const app = createApp(App)
   .use(i18n)
   .use(createPinia());
 
-const LocationUpdateIntervalMS = 1000 * 60;
+const LocationUpdateIntervalMS = 1000 * 30;
 
 router.isReady().then(async () => {
   app.mount('#app');

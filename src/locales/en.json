@@ -21,7 +21,8 @@
   "locationHistory": {
     "title": "Location History",
     "latitudeWithValue": "Latitude: {latitude}",
-    "longitudeWithValue": "Longitude: {longitude}"
+    "longitudeWithValue": "Longitude: {longitude}",
+    "lastUpdatedTimeWithValue": "Last updated time: {lastUpdateTime}"
   },
   "locationLabel": "Location",
   "main": "Main",
