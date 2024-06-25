@@ -2,22 +2,20 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>{{ $t('locationHistory') }}</ion-title>
+                <ion-title>{{ $t('locationHistory.title') }}</ion-title>
+                <ion-buttons slot="end">
+                    <!--                    <ion-button @click="fetchLocations">{{ $t('update') }}</ion-button>-->
+                    <ion-button @click="addLocation">{{ $t('add') }}</ion-button>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">{{ $t('locationHistory') }}</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <ion-button @click="fetchLocations">{{ $t('update') }}</ion-button>
-
             <ion-list>
                 <ion-item v-for="(location, index) in locations" :key="index">
                     <ion-label>
-                        <h2>{{ $t('latitudeWithValue', {latitude: location.latitude}) }}</h2>
-                        <h3>{{ $t('longitudeWithValue', {longitude: location.longitude}) }}</h3>
+                        <h2>{{ $t('locationHistory.latitudeWithValue', {latitude: location.latitude}) }}</h2>
+                        <h3>{{ $t('locationHistory.longitudeWithValue', {longitude: location.longitude}) }}</h3>
+                        <p>{{ new Date(location.timestamp).toLocaleString() }}</p>
                     </ion-label>
                 </ion-item>
             </ion-list>
@@ -26,14 +24,19 @@
 </template>
 
 <script setup lang="ts">
-import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import {onMounted, ref} from 'vue';
-import {DatabaseService, Location} from '@/services/DatabaseService';
+import {Locations, useDatabaseStore} from "@/stores/dataBaseStore";
 
-const locations = ref<Location[]>([]);
+const locations = ref<Locations>([]);
+const dataBaseStore = useDatabaseStore();
 
 const fetchLocations = async () => {
-    locations.value = await DatabaseService.getLocations();
+    locations.value = await dataBaseStore.getLocations();
+};
+
+const addLocation = async () => {
+    await dataBaseStore.addRandomLocation();
 };
 
 onMounted(fetchLocations);

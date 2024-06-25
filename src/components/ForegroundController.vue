@@ -2,18 +2,18 @@
     <ion-card>
         <ion-card-header>
             <!-- 🏷️ Card Title -->
-            <ion-card-title>{{ $t('foregroundController') }}</ion-card-title>
+            <ion-card-title>{{ $t('foregroundController.title') }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
             <ion-grid>
                 <ion-row>
                     <ion-col>
-                        <ion-label>{{ $t('statusWithValue', {status}) }}</ion-label>
+                        <ion-label>{{ $t('foregroundController.statusWithValue', {status}) }}</ion-label>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <ion-label>{{ $t('permissionsWithValue', {permission}) }}</ion-label>
+                        <ion-label>{{ $t('foregroundController.permissionsWithValue', {permission}) }}</ion-label>
                     </ion-col>
                 </ion-row>
                 <ion-row>

@@ -21,8 +21,15 @@
     "checkChatId": "Перевірити chatId",
     "checkConnectionAndGetChatList": "Перевірити токен та отримати список чатів"
   },
+  "foregroundController": {
+    "title": "Foreground Controller",
+    "statusWithValue": "Status: {status}",
+    "permissionsWithValue": "Permissions: {permission}"
+  },
   "telegramChatList": "Список телеграм чатів",
   "telegramConnections": "Телеграм Інтеграції",
   "testConnection": "Перевірити з'єднання",
-  "updateLocationLabel": "Оновити геолокацію"
+  "updateLocationLabel": "Оновити геолокацію",
+  "locationHistory": "Історія геолокацій",
+  "update": "Оновити"
 }

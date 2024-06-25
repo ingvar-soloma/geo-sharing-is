@@ -3,7 +3,7 @@ import {Geolocation, Position} from '@capacitor/geolocation';
 import {environment} from '@/environment';
 import {toastController} from '@ionic/vue';
 import {AddressComponents} from "@/types";
-import {Location} from "@/services/DatabaseService";
+import {Location} from "@/stores/dataBaseStore";
 
 export class LocationService {
   private GeoOptions = {

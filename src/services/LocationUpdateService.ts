@@ -1,4 +1,4 @@
-import {DatabaseService, Location} from './DatabaseService';
+import {Location, useDatabaseStore} from "@/stores/dataBaseStore";
 import {TelegramBotService} from './TelegramBotService';
 import {useSettingsStore} from "@/stores/settingsStore";
 import {LocationService} from './LocationService';
@@ -10,9 +10,11 @@ export class LocationUpdateService {
   private timeoutId: number = 0;
   private telegramBot: TelegramBotService;
   private locationService: LocationService;
+  private databaseStore: ReturnType<typeof useDatabaseStore>;
 
   constructor() {
     const settingsStore = useSettingsStore();
+    this.databaseStore = useDatabaseStore();
     this.telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
     this.locationService = new LocationService();
   }
@@ -20,7 +22,7 @@ export class LocationUpdateService {
   public async updateGeolocation() {
     // Get current location
     const {latitude, longitude} = await this.locationService.getCurrentPosition();
-    let currentLocation = {latitude, longitude};
+    let currentLocation: Location = {latitude, longitude, timestamp: new Date().getTime()};
 
     if (this.lastSentLocation !== null) {
 
@@ -32,9 +34,8 @@ export class LocationUpdateService {
       }
     }
 
-
     // use the time interval
-    await DatabaseService.storeLocation(currentLocation);
+    await this.databaseStore.storeLocation(currentLocation);
 
     // Send location to Telegram only if it changes
     if (this.isLocationChanged(currentLocation)) {
