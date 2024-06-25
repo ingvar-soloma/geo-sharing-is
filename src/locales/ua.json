@@ -1,35 +1,54 @@
 {
+  "add": "Додати",
   "addressLabel": "Адреса: ",
   "cityLabel": "Місто: ",
   "displayLocationLabel": "Показати геолокацію",
+  "foregroundController": {
+    "permissionsWithValue": "Дозволи: {permission}",
+    "statusWithValue": "Статус: {status}",
+    "title": "Контролер фонової активності"
+  },
   "foregroundNotification": {
     "body": "Це тіло повідомлення",
-    "title": ""
+    "title": "Це заголовок сповіщення"
   },
   "history": "Історія",
   "language": "Мова",
   "lastUpdateTimeLabel": "Час останнього оновлення: ",
   "locale-en": "Англійська",
   "locale-ua": "Українська",
+  "locationHistory": {
+    "title": "Історія геолокацій",
+    "latitudeWithValue": "Широта: {latitude}",
+    "longitudeWithValue": "Довгота: {longitude}"
+  },
   "locationLabel": "Геолокація",
   "main": "Головна",
   "noAddressAvailable": "Адреса не доступна",
   "noChatsFound": "Не знайдено чатів",
+  "requestPermissions": "Запросити дозвіл",
+  "reset": "Скинути",
+  "restart": "Перезапустити",
   "sendLocationLabel": "Відправити геолокацію",
   "settings": "Налаштування",
+  "start": "Почати",
+  "stop": "Зупинити",
   "telegramBotApi": {
     "checkChatId": "Перевірити chatId",
     "checkConnectionAndGetChatList": "Перевірити токен та отримати список чатів"
   },
-  "foregroundController": {
-    "title": "Foreground Controller",
-    "statusWithValue": "Status: {status}",
-    "permissionsWithValue": "Permissions: {permission}"
+  "telegramBotInstruction": {
+    "getTheApiToken": "Follow the prompts to create a new bot and get the API token.",
+    "openTelegramAndSearch": "Open Telegram and search for BotFather in the search bar.",
+    "sendComandNewBot": "Start a conversation with BotFather and send the command \"/newbot\".",
+    "toGetATelegramBotToken": "To get a Telegram bot token:",
+    "useGeneratedToken": "Use the generated token in application to authenticate your bot."
   },
+  "telegramBotToken": "Telegram bot token",
   "telegramChatList": "Список телеграм чатів",
   "telegramConnections": "Телеграм Інтеграції",
   "testConnection": "Перевірити з'єднання",
-  "updateLocationLabel": "Оновити геолокацію",
-  "locationHistory": "Історія геолокацій",
-  "update": "Оновити"
+  "toGetATelegramBotToken": "Щоб отримати Токен для телеграм бота:",
+  "update": "Оновити",
+  "updateLocationLabel": "Оновити геолокацію"
 }

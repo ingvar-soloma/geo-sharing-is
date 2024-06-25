@@ -68,7 +68,7 @@
                         <ion-label position="stacked">ChatId</ion-label>
                         <ion-input v-model="chatId" aria-label="BotToken"/>
                         <ion-button :disabled="settingsStore.isChatIdStored(chatId)" fill="clear" slot="end"
-                                    aria-label="Reset" @click="resetChatId">
+                                    :aria-label="$t('reset')" @click="resetChatId">
                             <ion-icon slot="end" :icon="reloadOutline"></ion-icon>
                         </ion-button>
                     </ion-item>
