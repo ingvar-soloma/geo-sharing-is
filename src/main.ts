@@ -55,7 +55,7 @@ router.isReady().then(async () => {
   const foregroundServiceManager = new ForegroundServiceManager();
   await foregroundServiceManager.startForegroundService();
 
-  const locationUpdateService = new LocationUpdateService();
+  const locationUpdateService = new LocationUpdateService(settingsStore);
 
   setInterval(() => {
     locationUpdateService.updateGeolocation();

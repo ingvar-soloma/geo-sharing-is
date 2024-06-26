@@ -1,6 +1,5 @@
 import {Location, useDatabaseStore} from "@/stores/dataBaseStore";
 import {TelegramBotService} from './TelegramBotService';
-import {useSettingsStore} from "@/stores/settingsStore";
 import {LocationService} from './LocationService';
 import {useForegroundServiceStore} from "@/stores/foregroundServiceStore";
 
@@ -14,11 +13,10 @@ export class LocationUpdateService {
   private databaseStore: ReturnType<typeof useDatabaseStore>;
   private foregroundServiceStore: ReturnType<typeof useForegroundServiceStore>;
 
-  constructor() {
-    const settingsStore = useSettingsStore();
+  constructor(settingsStore: any) { // todo: add type
+    this.telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
     this.databaseStore = useDatabaseStore();
     this.foregroundServiceStore = useForegroundServiceStore();
-    this.telegramBot = new TelegramBotService(settingsStore.botToken, settingsStore.chatId);
     this.locationService = new LocationService();
   }
 

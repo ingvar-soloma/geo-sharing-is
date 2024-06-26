@@ -9,6 +9,8 @@
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
+            <Map :locations="locations"/>
+
             <ion-list>
                 <ion-item v-for="(location, index) in locations" :key="index">
                     <ion-label>
@@ -35,21 +37,29 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/vue';
-import {onMounted, ref} from 'vue';
-import {Locations, useDatabaseStore} from "@/stores/dataBaseStore";
+import {computed, inject, onMounted} from 'vue';
+import {useDatabaseStore} from "@/stores/dataBaseStore";
 import {LocationUpdateService} from "@/services/LocationUpdateService";
+import {useSettingsStore} from "@/stores/settingsStore";
+import 'leaflet/dist/leaflet.css';
+import Map from "@/components/Map.vue";
 
-const locations = ref<Locations>([]);
+const settingsStore = useSettingsStore();
+settingsStore.loadSettings();
+const manager = new LocationUpdateService(settingsStore);
 const dataBaseStore = useDatabaseStore();
-const manager = new LocationUpdateService();
 
-const fetchLocations = async () => {
-    locations.value = await dataBaseStore.getLocations();
-};
+const locations = computed(() => dataBaseStore.locations);
 
 const addLocation = async () => {
     await manager.updateGeolocation();
 };
 
-onMounted(fetchLocations);
+const isNativePlatform = inject("isNativePlatform");
+if (typeof isNativePlatform !== 'boolean') {
+    throw new Error("isNativePlatform is not provided");
+}
+
+onMounted(() => {
+});
 </script>

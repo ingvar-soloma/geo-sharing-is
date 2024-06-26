@@ -29,7 +29,7 @@ export class TelegramBotService {
       });
     } catch (error) {
       console.error('Error getting updates:', (error as Error).message);
-      throw 'Error getting updates';
+      throw new Error('Error getting updates');
     }
   }
 
@@ -50,7 +50,7 @@ export class TelegramBotService {
       return {id, name};
     } catch (error) {
       console.error('Error getting chat information:', (error as Error).message);
-      throw 'Error getting chat information';
+      throw new Error('Error getting chat information');
     }
   }
 
@@ -72,7 +72,7 @@ export class TelegramBotService {
       return chatList;
     } catch (error) {
       console.error('Error getting chat list:', (error as Error).message);
-      throw 'Error getting chat list';
+      throw new Error('Error getting chat list');
     }
   }
 
@@ -93,7 +93,7 @@ export class TelegramBotService {
       return {fileId: fileId2, filePath};
     } catch (error) {
       console.error('Error getting file information:', (error as Error).message);
-      throw 'Error getting file information';
+      throw new Error('Error getting file information');
     }
   }
 
@@ -111,7 +111,7 @@ export class TelegramBotService {
       link.click();
     } catch (error) {
       console.error('Error downloading file:', (error as Error).message);
-      throw 'Error downloading file';
+      throw new Error('Error downloading file');
     }
   }
 
@@ -127,7 +127,7 @@ export class TelegramBotService {
       console.log('Message sent successfully:', response.data);
     } catch (error) {
       console.error('Error sending message:', (error as Error).message);
-      throw 'Error sending message';
+      throw new Error('Error sending message');
     }
   }
 
@@ -151,7 +151,7 @@ export class TelegramBotService {
       console.log('Location sent successfully:', response.data);
     } catch (error) {
       console.error('Error sending location:', (error as Error).message);
-      throw 'Error sending location';
+      throw new Error('Error sending location');
     }
   }
 
