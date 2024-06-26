@@ -3,14 +3,15 @@ import {defineStore} from 'pinia';
 export type Status = 'running' | 'stopped' | 'error';
 
 export const stopped = 'stopped';
-export const granted = 'granted';
 export const running = 'running';
+export const denied = 'denied';
+export const granted = 'granted';
 
 export const useForegroundServiceStore = defineStore({
   id: 'foregroundService',
   state: () => ({
     status: stopped,
-    permission: granted,
+    permission: denied,
     lastUpdateTime: '',
   }),
   actions: {

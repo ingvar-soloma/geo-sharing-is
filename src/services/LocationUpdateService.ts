@@ -23,7 +23,13 @@ export class LocationUpdateService {
   public async updateGeolocation(singleRun: boolean = false) {
     // Get current location
     const {latitude, longitude} = await this.locationService.getCurrentPosition();
-    let currentLocation: Location = {latitude, longitude, timestamp: new Date().getTime()};
+    const {address} = await this.locationService.getAddressFromCoordinates(latitude, longitude);
+    let currentLocation: Location = {
+      latitude,
+      longitude,
+      address,
+      timestamp_from: new Date().getTime()
+    };
 
     if (this.lastSentLocation !== null) {
 
@@ -33,14 +39,14 @@ export class LocationUpdateService {
       if (distance < 0.009) {
         currentLocation = {
           ...this.lastSentLocation,
-          timestamp: currentLocation.timestamp
+          timestamp_from: currentLocation.timestamp_from
         };
       }
     }
 
     // use the time interval
     await this.databaseStore.storeLocation(currentLocation);
-    this.foregroundServiceStore.updateLastUpdateTime(currentLocation.timestamp);
+    this.foregroundServiceStore.updateLastUpdateTime(currentLocation.timestamp_to ?? currentLocation.timestamp_from);
 
     // Send location to Telegram only if it changes
     if (this.isLocationChanged(currentLocation)) {

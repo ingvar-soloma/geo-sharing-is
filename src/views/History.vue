@@ -14,9 +14,12 @@
             <ion-list>
                 <ion-item v-for="(location, index) in locations" :key="index">
                     <ion-label>
-                        <h2>{{ $t('locationHistory.latitudeWithValue', {latitude: location.latitude}) }}</h2>
-                        <h3>{{ $t('locationHistory.longitudeWithValue', {longitude: location.longitude}) }}</h3>
-                        <p>{{ new Date(location.timestamp).toLocaleString() }}</p>
+                        <h3>{{ location.address }}</h3>
+                        <p>{{ new Date(location.timestamp_from).toLocaleString() }}
+                            <span v-if="location.timestamp_to">- {{
+                                    new Date(location.timestamp_to).toLocaleTimeString()
+                                }}</span>
+                        </p>
                     </ion-label>
                 </ion-item>
             </ion-list>

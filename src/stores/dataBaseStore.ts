@@ -1,6 +1,12 @@
 import {defineStore} from 'pinia';
 
-export type Location = { latitude: number, longitude: number, timestamp: number };
+export type Location = {
+  latitude: number,
+  longitude: number,
+  address: string,
+  timestamp_from: number,
+  timestamp_to?: number
+};
 export type Locations = Location[];
 
 export const useDatabaseStore = defineStore({
@@ -9,7 +15,18 @@ export const useDatabaseStore = defineStore({
     locations: [] as Locations,
   }),
   actions: {
+    isSameLatLong: function (lastLocation: Location, cord: Location) {
+      return lastLocation.latitude === cord.latitude
+        && lastLocation.longitude === cord.longitude;
+    },
+    // if the last location is the same as the current one, update the timestamp_to instead of adding a new location
     async storeLocation(cord: Location) {
+      const lastLocation = this.locations[this.locations.length - 1];
+      if (lastLocation && this.isSameLatLong(lastLocation, cord)) {
+        lastLocation.timestamp_to = cord.timestamp_from;
+        console.log('Location updated successfully:', lastLocation);
+        return;
+      }
       this.locations.push(cord);
       console.log('Location stored successfully:', cord);
     },
@@ -18,10 +35,11 @@ export const useDatabaseStore = defineStore({
     },
     // dev testing function
     async addRandomLocation() {
-      this.storeLocation({
+      await this.storeLocation({
         latitude: Math.random() * 100,
         longitude: Math.random() * 100,
-        timestamp: new Date().getTime()
+        address: 'Random address',
+        timestamp_from: new Date().getTime()
       })
     },
   },
