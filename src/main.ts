@@ -31,6 +31,9 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/main.css';
+import {Capacitor} from "@capacitor/core";
+import {LocationService} from "@/services/LocationService";
 
 // 🚀 This is the main entry point of the application
 const app = createApp(App)
@@ -39,9 +42,14 @@ const app = createApp(App)
   .use(i18n)
   .use(createPinia());
 
-const LocationUpdateIntervalMS = 1000 * 30;
+const LocationUpdateIntervalMS = 1000 * 60;
+
+app.provide('isNativePlatform', Capacitor.isNativePlatform());
 
 router.isReady().then(async () => {
+  const locationService = new LocationService();
+  await locationService.updateLocation()
+  console.log('location is ready')
   app.mount('#app');
 
   const settingsStore = useSettingsStore();

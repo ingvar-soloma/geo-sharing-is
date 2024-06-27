@@ -21,11 +21,8 @@ export const useForegroundServiceStore = defineStore({
     setPermissionStatus(permission: PermissionState) {
       this.permission = permission;
     },
-    updateLastUpdateTime(timestamp: number) {
-      const lastUpdateTime = new Date().toLocaleString();
-      console.log('Last update time:', lastUpdateTime)
-      console.log('Timestamp:', new Date(timestamp).toLocaleString(), timestamp)
-      this.lastUpdateTime = lastUpdateTime;
+    updateLastUpdateTime() {
+      this.lastUpdateTime = new Date().toLocaleString();
     }
   },
   getters: {

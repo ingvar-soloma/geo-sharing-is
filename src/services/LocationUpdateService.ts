@@ -2,6 +2,7 @@ import {Location, useDatabaseStore} from "@/stores/dataBaseStore";
 import {TelegramBotService} from './TelegramBotService';
 import {LocationService} from './LocationService';
 import {useForegroundServiceStore} from "@/stores/foregroundServiceStore";
+import {useLocationStore} from "@/stores/locationStore";
 
 const sendingTimeOutMs = 15 * 60 * 1000;
 
@@ -11,6 +12,7 @@ export class LocationUpdateService {
   private telegramBot: TelegramBotService;
   private locationService: LocationService;
   private databaseStore: ReturnType<typeof useDatabaseStore>;
+  private locationStore: ReturnType<typeof useLocationStore> = useLocationStore()
   private foregroundServiceStore: ReturnType<typeof useForegroundServiceStore>;
 
   constructor(settingsStore: any) { // todo: add type
@@ -23,7 +25,7 @@ export class LocationUpdateService {
   public async updateGeolocation(singleRun: boolean = false) {
     // Get current location
     const {latitude, longitude} = await this.locationService.getCurrentPosition();
-    const {address} = await this.locationService.getAddressFromCoordinates(latitude, longitude);
+    const {address, city} = await this.locationService.getAddressFromCoordinates(latitude, longitude);
     let currentLocation: Location = {
       latitude,
       longitude,
@@ -35,7 +37,6 @@ export class LocationUpdateService {
 
       const distance = this.locationService.distance(currentLocation, this.lastSentLocation);
 
-      console.log('distance', distance)
       if (distance < 0.009) {
         currentLocation = {
           ...this.lastSentLocation,
@@ -46,12 +47,15 @@ export class LocationUpdateService {
 
     // use the time interval
     await this.databaseStore.storeLocation(currentLocation);
-    this.foregroundServiceStore.updateLastUpdateTime(currentLocation.timestamp_to ?? currentLocation.timestamp_from);
+    this.foregroundServiceStore.updateLastUpdateTime();
 
     // Send location to Telegram only if it changes
     if (this.isLocationChanged(currentLocation)) {
       await this.telegramBot.sendLocation(currentLocation.latitude, currentLocation.longitude);
       this.lastSentLocation = currentLocation;
+
+      this.locationStore.updateLocation(city, address);
+      this.locationStore.updateCoordinates(currentLocation.latitude, currentLocation.longitude);
 
       singleRun || this.initTimeout(currentLocation);
     }

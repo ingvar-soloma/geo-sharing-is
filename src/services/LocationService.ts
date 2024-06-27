@@ -4,6 +4,7 @@ import {environment} from '@/environment';
 import {toastController} from '@ionic/vue';
 import {AddressComponents} from "@/types";
 import {Location} from "@/stores/dataBaseStore";
+import {useLocationStore} from "@/stores/locationStore";
 
 export class LocationService {
   private GeoOptions = {
@@ -11,6 +12,7 @@ export class LocationService {
     timeout: 5000, // Wait for 5 seconds for location updates
     maximumAge: 50000, // Accept a cached position that is up to 50 seconds old
   };
+  private locationStore: ReturnType<typeof useLocationStore> = useLocationStore();
 
   async getCurrentPosition(): Promise<Position['coords']> {
     try {
@@ -62,6 +64,19 @@ export class LocationService {
       console.error('Error fetching address:', error);
       throw error;
     }
+  }
+
+  public async updateLocation() {
+    // 🛰️ Get current position
+    const coordinates: Position['coords'] = await this.getCurrentPosition();
+    // 📍 Get address from coordinates
+    const {
+      city,
+      address
+    }: AddressComponents = await this.getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
+    // 🌍 Update location and coordinates in store
+    this.locationStore.updateLocation(city, address);
+    this.locationStore.updateCoordinates(coordinates.latitude, coordinates.longitude);
   }
 
   private extractCity(addressComponents: any[]): string {

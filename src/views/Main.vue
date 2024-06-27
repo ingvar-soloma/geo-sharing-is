@@ -69,7 +69,7 @@
                             </ion-col>
                             <ion-col size="auto">
                                 <!-- 🔄 Update Location Button -->
-                                <ion-button fill="clear" @click="updateLocation()">
+                                <ion-button fill="clear" @click="locationService.updateLocation()">
                                     <ion-icon :icon="refresh"></ion-icon>
                                 </ion-button>
                             </ion-col>
@@ -121,7 +121,6 @@ import {LocationService} from '@/services/LocationService';
 import {Share} from '@capacitor/share';
 import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
-import {AddressComponents} from "@/types";
 
 const locationStore = useLocationStore();
 const settingsStore = useSettingsStore();
@@ -157,25 +156,6 @@ const displayLocation = async () => {
     } catch (error) {
         // ❌ Error handling
         console.error('Error displaying location:', error);
-    }
-};
-
-const updateLocation = async () => {
-    try {
-        // 🛰️ Get current position
-        const coordinates: Position['coords'] = await locationService.getCurrentPosition();
-        // 📍 Get address from coordinates
-        const {
-            city,
-            address
-        }: AddressComponents = await locationService.getAddressFromCoordinates(coordinates.latitude, coordinates.longitude);
-        // 🌍 Update location in store
-        locationStore.updateLocation(city, address);
-        // 🛰️ Update coordinates in store
-        locationStore.updateCoordinates(coordinates.latitude, coordinates.longitude);
-    } catch (error) {
-        // ❌ Error handling
-        console.error('Error updating location:', error);
     }
 };
 
