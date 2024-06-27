@@ -4,6 +4,7 @@
   "cityLabel": "City: ",
   "displayLocationLabel": "Display Location",
   "foregroundController": {
+    "lastUpdatedTimeWithValue": "Last updated time: {lastUpdateTime}",
     "permissionsWithValue": "Permissions: {permission}",
     "statusWithValue": "Status: {status}",
     "title": "Foreground Controller"

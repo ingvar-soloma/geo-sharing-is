@@ -1,13 +1,5 @@
 import {defineStore} from 'pinia';
-
-export type Location = {
-  latitude: number,
-  longitude: number,
-  address: string,
-  timestamp_from: number,
-  timestamp_to?: number
-};
-export type Locations = Location[];
+import {Location, Locations} from "@/types";
 
 export const useDatabaseStore = defineStore({
   id: 'database',

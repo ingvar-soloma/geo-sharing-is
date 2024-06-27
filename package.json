@@ -30,7 +30,6 @@
     "@ionic/storage": "^4.0.0",
     "@ionic/vue": "^8.2.2",
     "@ionic/vue-router": "^8.2.2",
-    "@mdi/font": "^7.4.47",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "ionicons": "^7.4.0",

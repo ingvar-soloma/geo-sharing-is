@@ -1,4 +1,5 @@
-import {Location, useDatabaseStore} from "@/stores/dataBaseStore";
+import {useDatabaseStore} from "@/stores/dataBaseStore";
+import {Location} from "@/types";
 import {TelegramBotService} from './TelegramBotService';
 import {LocationService} from './LocationService';
 import {useForegroundServiceStore} from "@/stores/foregroundServiceStore";

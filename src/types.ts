@@ -23,3 +23,25 @@ export interface GPSCoordinates {
   latitude: number,
   longitude: number
 }
+
+export interface Location {
+  latitude: number,
+  longitude: number,
+  address: string,
+  timestamp_from: number,
+  timestamp_to?: number
+}
+
+export type Locations = Location[]
+
+export interface LeafletMap {
+  leafletObject: any
+}
+
+export interface LogEntry {
+  timestamp: Date;
+  level: 'log' | 'info' | 'warning' | 'error';
+  message: string;
+  tag?: string;
+  object?: any;
+}

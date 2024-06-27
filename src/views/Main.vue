@@ -89,6 +89,9 @@
                     </ion-grid>
                 </ion-card-content>
             </ion-card>
+
+            <Logger/>
+
         </ion-content>
     </ion-page>
 </template>
@@ -121,13 +124,14 @@ import {LocationService} from '@/services/LocationService';
 import {Share} from '@capacitor/share';
 import {onMounted} from "vue";
 import {Position} from "@capacitor/geolocation/dist/esm/definitions";
+import Logger from "@/components/Logger.vue";
 
 const locationStore = useLocationStore();
 const settingsStore = useSettingsStore();
 const locationService = new LocationService();
 
 onMounted(async () => {
-    await updateLocation();
+    await locationService.updateLocation();
 });
 
 const displayLocation = async () => {

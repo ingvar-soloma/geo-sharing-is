@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
 import {LMap, LMarker, LTileLayer, LTooltip} from "@vue-leaflet/vue-leaflet";
-import {Locations} from "@/stores/dataBaseStore";
+import {LeafletMap, Locations} from "@/types";
 import {useLocationStore} from "@/stores/locationStore";
 import {IonButton, IonIcon} from "@ionic/vue";
 import {LocationService} from "@/services/LocationService";
@@ -15,12 +15,12 @@ const locationStore = useLocationStore();
 const locationService = new LocationService();
 
 const zoom = ref(5);
-let map = ref(null);
+let map = ref<LeafletMap | null>(null);
 
 const currentPosition = ref([locationStore.latitude, locationStore.longitude]);
 
 const centerMap = () => {
-    if (!map.value && !map.value.leafletObject) return;
+    if (!map.value?.leafletObject) return;
 
     currentPosition.value = [locationStore.latitude, locationStore.longitude];
     map.value.leafletObject.setView(currentPosition.value, 5);
@@ -28,7 +28,7 @@ const centerMap = () => {
 
 
 onMounted(() => {
-    // centerMap();
+    centerMap();
     console.log('mounted')
 });
 

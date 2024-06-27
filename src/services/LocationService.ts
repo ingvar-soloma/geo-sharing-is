@@ -2,8 +2,7 @@ import axios from 'axios';
 import {Geolocation, Position} from '@capacitor/geolocation';
 import {environment} from '@/environment';
 import {toastController} from '@ionic/vue';
-import {AddressComponents} from "@/types";
-import {Location} from "@/stores/dataBaseStore";
+import {AddressComponents, Location} from "@/types";
 import {useLocationStore} from "@/stores/locationStore";
 
 export class LocationService {

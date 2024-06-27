@@ -4,6 +4,7 @@
   "cityLabel": "Місто: ",
   "displayLocationLabel": "Показати геолокацію",
   "foregroundController": {
+    "lastUpdatedTimeWithValue": "Час останнього оновлення: {lastUpdateTime}",
     "permissionsWithValue": "Дозволи: {permission}",
     "statusWithValue": "Статус: {status}",
     "title": "Контролер фонової активності"
